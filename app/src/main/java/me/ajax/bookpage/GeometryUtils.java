@@ -1,6 +1,7 @@
 package me.ajax.bookpage;
 
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.Log;
 
 /**
@@ -86,25 +87,22 @@ public class GeometryUtils {
      * <p>
      * 参考： http://www.360doc.com/content/15/0325/22/15028327_458051859.shtml
      */
-    double intersectionX(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
-        return ((x2 - x1) * (x3 - x4) * (y3 - y1) -
-                x3 * (x2 - x1) * (y3 - y4) + x1 * (y2 - y1) * (x3 - x4)) /
-                ((y2 - y1) * (x3 - x4) - (x2 - x1) * (y3 - y4));
+    static float intersectionX(PointF a, PointF b, PointF c, PointF d) {
+        return ((b.x - a.x) * (c.x - d.x) * (c.y - a.y) -
+                c.x * (b.x - a.x) * (c.y - d.y) + a.x * (b.y - a.y) * (c.x - d.x)) /
+                ((b.y - a.y) * (c.x - d.x) - (b.x - a.x) * (c.y - d.y));
     }
+
 
     /**
      * 取得直线交点Y
      */
-    double intersectionY(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
-        return ((y2 - y1) * (y3 - y4) * (x3 - x1) -
-                y3 * (y2 - y1) * (x3 - x4) + y1 * (x2 - x1) * (y3 - y4)) /
-                ((y2 - y1) * (y3 - y4) - (y2 - y1) * (x3 - x4));
-    }
+    static float intersectionY(PointF a, PointF b, PointF c, PointF d) {
+        return ((b.y - a.y) * (c.y - d.y) * (c.x - a.x) - c.y
+                * (b.y - a.y) * (c.x - d.x) + a.y * (b.x - a.x) * (c.y - d.y))
+                / ((b.x - a.x) * (c.y - d.y) - (b.y - a.y) * (c.x - d.x));
 
-    float intersectionY(float p, double angle) {
-        return (float) (p * Math.sin(Math.toRadians(angle)));
     }
-
     /**
      * 极坐标转换为直角坐标
      */
